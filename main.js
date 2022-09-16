@@ -61,13 +61,12 @@ function main() {
     // add pages and their fps(optional, but better add) here
 
     if (window.page === 'mainMenu') {
-        const fps = 60
+        const fps = 600
 
         updateFps(fps)
 
         mainMenu()
     }
-
 
     renderer.render()
 }
