@@ -1,6 +1,7 @@
 import { mouse } from './lib/mouse.js'
 import { renderer } from './lib/renderer.js'
 import { mainMenu } from './pages/main.js'
+import { test } from './pages/test.js'
 
 const container = document.getElementById('container')
 const asciicontainer = document.getElementById('asciicontainer')
@@ -61,11 +62,17 @@ function main() {
     // add pages and their fps(optional, but better add) here
 
     if (window.page === 'mainMenu') {
-        const fps = 600
+        const fps = 60
 
         updateFps(fps)
 
         mainMenu()
+    } else if (window.page === 'test') {
+        const fps = 60
+
+        updateFps(fps)
+
+        test()
     }
 
     renderer.render()
