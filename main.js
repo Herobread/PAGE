@@ -57,16 +57,21 @@ export function updateFps(fps) {
     interval = setInterval(main, 1000 / fps)
 }
 
+let performanceRes = []
+
 function main() {
     // this function controlls pages
     // add pages and their fps(optional, but better add) here
 
+    let sf, ef
+    sf = performance.now()
     if (window.page === 'mainMenu') {
         const fps = 60
 
         updateFps(fps)
 
         mainMenu()
+
     } else if (window.page === 'test') {
         const fps = 60
 
@@ -74,6 +79,20 @@ function main() {
 
         test()
     }
+    ef = performance.now()
 
+
+    const s = performance.now()
     renderer.render()
+    const e = performance.now()
+
+    performanceRes.push({
+        rendering: e - s,
+        functional: ef - sf,
+    })
+
+    if (window.clock % 200 === 0) {
+        console.log(performanceRes)
+        performanceRes = []
+    }
 }
