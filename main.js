@@ -1,3 +1,4 @@
+import { kb } from './lib/keyboard.js'
 import { mouse } from './lib/mouse.js'
 import { renderer } from './lib/renderer.js'
 import { mainMenu } from './pages/main.js'
@@ -34,9 +35,10 @@ window.onload = function () {
     }
 
     mouse.init()
+    kb.init()
 
     window.page = 'mainMenu'
-    // window.page = 'game'
+    // window.page = 'test'
 
     window.onkeyup = function (e) {
         window.pressedKeys[e.key] = false
@@ -91,8 +93,8 @@ function main() {
         functional: ef - sf,
     })
 
-    if (window.clock % 200 === 0) {
-        console.log(performanceRes)
-        performanceRes = []
-    }
+    // if (window.clock % 200 === 0) {
+    //     console.log(performanceRes)
+    //     performanceRes = []
+    // }
 }

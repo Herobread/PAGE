@@ -1,57 +1,43 @@
 import { art } from '../art.js'
 import { animations } from '../lib/animations.js'
 import { colisions } from '../lib/colisions.js'
+import { gamepad } from '../lib/gamepad.js'
+import { mouse } from '../lib/mouse.js'
 import { renderer } from '../lib/renderer.js'
+import { shapes } from '../lib/shapes.js'
+import { ui } from '../lib/ui.js'
+import { randomInRange, randomInRangeFloat } from '../lib/util.js'
 
-let x = 10
-let y = 10
+let selected = ''
+let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-let xp = 10
-let yp = 9
+export async function test() {
+    renderer.drawObject(`Page main.js` + window.h + ' ' + window.w, 5, 5)
+    const pointer = mouse.info()
 
-let pressCooldown = 20
+    for (let i = 0; i < 6; i += 1)
+        renderer.drawObject(characters.charAt(randomInRange(0, characters.length)), randomInRangeFloat(0, 4), randomInRangeFloat(0, 4))
 
-export function test() {
-    renderer.drawObject(`Hello world!`, 5, 5)
-
-    let pressed = 0
-
-    renderer.drawObject(art.textures.block.img, x, y)
-
-    if (pressCooldown)
-        pressCooldown -= 1
-
-    if (window.pressedKeys['w'] && !pressCooldown) {
-        y -= 0.2
-        pressed = 1
-    }
-    if (window.pressedKeys['s'] && !pressCooldown) {
-        y += 0.2
-        pressed = 1
-    }
-    if (window.pressedKeys['d'] && !pressCooldown) {
-        x += 0.2
-        pressed = 1
-    }
-    if (window.pressedKeys['a'] && !pressCooldown) {
-        x -= 0.2
-        pressed = 1
-    }
-
-    if (colisions.checkPointInSquare(xp, yp, x, y, 4, 4)) {
-        renderer.drawObject('@', xp, yp)
+    if (pointer.down) {
+        for (let i = 0; i < 100; i++) {
+            animations.animate(
+                randomInRange(0, 1) ? art.animations.fire : art.animations.particle, pointer.x, pointer.y,
+                randomInRangeFloat(-15, 15),
+                randomInRangeFloat(-13, 13),
+                {
+                    // loop: true
+                }
+            )
+        }
     } else {
-        renderer.drawObject('=', xp, yp)
+        renderer.drawObject('Click to create a lot of particles!', pointer.x + 3, pointer.y)
     }
 
-    if (pressed) {
-        pressCooldown = 2
-    }
 
-    if (window.pressedKeys[' '] && (!pressCooldown || pressed)) {
-        pressCooldown = 20
-        window.page = "mainMenu"
-    }
-
+    animations.move()
+    if (window.clock % 3 === 0)
+        animations.tick()
     animations.render()
+
+    mouse.showCursor()
 }
