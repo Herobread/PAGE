@@ -1,4 +1,5 @@
 import { art } from '../art.js'
+import { selectExperiment } from '../config/constants.js'
 import { animations } from '../lib/animations.js'
 import { colisions } from '../lib/colisions.js'
 import { gamepad } from '../lib/gamepad.js'
@@ -9,129 +10,57 @@ import { shapes } from '../lib/shapes.js'
 import { ui } from '../lib/ui.js'
 import { randomInRange, randomInRangeFloat } from '../lib/util.js'
 
+let player = {
+    x: 10,
+    y: 10,
+    hp: 3,
+    attack: 0
+}
+
 export async function mainMenu() {
-    renderer.drawObject(`Page main.js` + window.h + ' ' + window.w, 0, 0)
+    renderer.drawObject(`sword attack test`, 0, 0)
     const pointer = mouse.info()
     const keyboard = kb.info()
 
-    let ddOptions = [
-        {
-            content: 'New',
-            onClick: () => {
-                console.log('first')
-            }
-        },
-        {
-            content: 'New window',
-            onClick: () => {
-                console.log('2')
-            }
-        },
-        {
-            content: 'Open',
-            onClick: () => { }
-        },
-        {
-            content: 'Save',
-            onClick: () => { }
-        },
-        {
-            content: 'Save as',
-            onClick: () => { }
-        },
-        {
-            content: '',
-            split: true,
-            onClick: () => { }
-        },
-        {
-            content: 'Page setup',
-            onClick: () => { }
-        },
-        {
-            content: 'Print',
-            onClick: () => { }
-        },
-        {
-            content: '',
-            split: true,
-            onClick: () => { }
-        },
-        {
-            content: 'Exit',
-            onClick: () => { }
-        },
-    ]
+    ui.dropDown('Select experiment', selectExperiment, 5, 5, pointer)
+
+    renderer.drawObject(`@`, player.x, player.y)
+
+    // console.log(keyboard.down && keyboard.down)
+    if (pointer.click) {
+        player.attack = 0
+    }
+    if (keyboard.down['d']) {
+        player.x += 0.4
+    }
+    if (keyboard.down['a']) {
+        player.x -= 0.4
+    }
+    if (keyboard.down['w']) {
+        player.y -= 0.4
+    }
+    if (keyboard.down['s']) {
+        player.y += 0.4
+    }
 
 
-    let ddOptions2 = [
-        {
-            content: 'option one',
-            onClick: () => {
-                console.log('first')
-            }
-        },
-        {
-            content: 'option 2',
-            onClick: () => {
-                console.log('2')
-            }
-        },
-        {
-            content: 'option 3',
-            onClick: () => {
-                console.log('3')
-            }
-        },
-        {
-            content: 'option one',
-            onClick: () => {
-                console.log('first')
-            }
-        },
-        {
-            content: 'option 2',
-            onClick: () => {
-                console.log('2')
-            }
-        },
-        {
-            content: 'option 3',
-            onClick: () => {
-                console.log('3')
-            }
-        },
-        {
-            content: 'option one',
-            onClick: () => {
-                console.log('first')
-            }
-        },
-        {
-            content: 'option 2',
-            onClick: () => {
-                console.log('2')
-            }
-        },
-        {
-            content: 'option 3',
-            onClick: () => {
-                console.log('3')
-            }
-        },
-    ]
-
-    const fileDropdown = ui.dropDown('File', ddOptions, 5, 5, pointer)
-
-    ui.dropDown('Edit', ddOptions2, 5 + fileDropdown.width + 1, 5, pointer)
-
-    renderer.drawObject(pointer.scroll + ' s', 8, 9)
+    handleCombat()
 
     animations.move()
-    if (window.clock % 3 === 0)
+    if (window.clock % 2 === 0)
         animations.tick()
 
     animations.render()
 
     mouse.showCursor()
+}
+
+function handleCombat() {
+
+
+    if (player.attack < art.animations.combat.swordAttack.sprites.length && player.attack !== -1) {
+        renderer.drawObject(art.animations.combat.swordAttack.sprites[player.attack], player.x, player.y - 4)
+        if (window.clock % 2 == 0)
+            player.attack += 1
+    }
 }

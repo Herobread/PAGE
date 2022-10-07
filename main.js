@@ -2,7 +2,11 @@ import { kb } from './lib/keyboard.js'
 import { mouse } from './lib/mouse.js'
 import { renderer } from './lib/renderer.js'
 import { mainMenu } from './pages/main.js'
-import { test } from './pages/test.js'
+import { stickmanAttack } from './pages/stickmanAttack.js'
+import { stickman } from './pages/stickman.js'
+import { gunTest } from './pages/test.js'
+import { sinus } from './pages/sinus.js'
+import { particles } from './pages/particles.js'
 
 const container = document.getElementById('container')
 const asciicontainer = document.getElementById('asciicontainer')
@@ -37,8 +41,13 @@ window.onload = function () {
     mouse.init()
     kb.init()
 
-    window.page = 'mainMenu'
-    // window.page = 'test'
+    window.page = 'sword'
+    window.page = 'stickman'
+    window.page = 'gun'
+    window.page = 'stickmanAttack'
+    window.page = 'sinus'
+    window.page = 'particles'
+
 
     window.onkeyup = function (e) {
         window.pressedKeys[e.key] = false
@@ -67,19 +76,43 @@ function main() {
 
     let sf, ef
     sf = performance.now()
-    if (window.page === 'mainMenu') {
+    if (window.page === 'sword') {
         const fps = 60
 
         updateFps(fps)
 
         mainMenu()
 
-    } else if (window.page === 'test') {
+    } else if (window.page === 'gun') {
         const fps = 60
 
         updateFps(fps)
 
-        test()
+        gunTest()
+    } else if (window.page === 'stickman') {
+        const fps = 60
+
+        updateFps(fps)
+
+        stickman()
+    } else if (window.page === 'stickmanAttack') {
+        const fps = 60
+
+        updateFps(fps)
+
+        stickmanAttack()
+    } else if (window.page === 'sinus') {
+        const fps = 144
+
+        updateFps(fps)
+
+        sinus()
+    } else if (window.page === 'particles') {
+        const fps = 144
+
+        updateFps(fps)
+
+        particles()
     }
     ef = performance.now()
 
