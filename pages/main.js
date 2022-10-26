@@ -14,122 +14,24 @@ export async function mainMenu() {
     const pointer = mouse.info()
     const keyboard = kb.info()
 
-    let ddOptions = [
-        {
-            content: 'New',
-            onClick: () => {
-                console.log('first')
-            }
-        },
-        {
-            content: 'New window',
-            onClick: () => {
-                console.log('2')
-            }
-        },
-        {
-            content: 'Open',
-            onClick: () => { }
-        },
-        {
-            content: 'Save',
-            onClick: () => { }
-        },
-        {
-            content: 'Save as',
-            onClick: () => { }
-        },
-        {
-            content: '',
-            split: true,
-            onClick: () => { }
-        },
-        {
-            content: 'Page setup',
-            onClick: () => { }
-        },
-        {
-            content: 'Print',
-            onClick: () => { }
-        },
-        {
-            content: '',
-            split: true,
-            onClick: () => { }
-        },
-        {
-            content: 'Exit',
-            onClick: () => { }
-        },
-    ]
+    // animations.animate(art.animations.particle,
+    //     randomInRange(0, window.w),
+    //     randomInRange(0, window.h),
+    //     randomInRangeFloat(-2, 2),
+    //     randomInRangeFloat(-2, 2),
+    // )
 
-
-    let ddOptions2 = [
-        {
-            content: 'option one',
-            onClick: () => {
-                console.log('first')
-            }
-        },
-        {
-            content: 'option 2',
-            onClick: () => {
-                console.log('2')
-            }
-        },
-        {
-            content: 'option 3',
-            onClick: () => {
-                console.log('3')
-            }
-        },
-        {
-            content: 'option one',
-            onClick: () => {
-                console.log('first')
-            }
-        },
-        {
-            content: 'option 2',
-            onClick: () => {
-                console.log('2')
-            }
-        },
-        {
-            content: 'option 3',
-            onClick: () => {
-                console.log('3')
-            }
-        },
-        {
-            content: 'option one',
-            onClick: () => {
-                console.log('first')
-            }
-        },
-        {
-            content: 'option 2',
-            onClick: () => {
-                console.log('2')
-            }
-        },
-        {
-            content: 'option 3',
-            onClick: () => {
-                console.log('3')
-            }
-        },
-    ]
-
-    const fileDropdown = ui.dropDown('File', ddOptions, 5, 5, pointer)
-
-    ui.dropDown('Edit', ddOptions2, 5 + fileDropdown.width + 1, 5, pointer)
-
-    renderer.drawObject(pointer.scroll + ' s', 8, 9)
+    if (pointer.down) {
+        animations.animate(art.animations.particle, pointer.x, pointer.y, randomInRangeFloat(-2, 2), randomInRangeFloat(-2, 2), 3)
+        animations.animate(art.animations.particle, pointer.x, pointer.y, randomInRangeFloat(-2, 2), randomInRangeFloat(-2, 2))
+        animations.animate(art.animations.particle, pointer.x, pointer.y, randomInRangeFloat(-2, 2), randomInRangeFloat(-2, 2))
+        animations.animate(art.animations.particle, pointer.x, pointer.y, randomInRangeFloat(-2, 2), randomInRangeFloat(-2, 2))
+        animations.animate(art.animations.particle, pointer.x, pointer.y, randomInRangeFloat(-2, 2), randomInRangeFloat(-2, 2))
+        animations.animate(art.animations.particle, pointer.x, pointer.y, randomInRangeFloat(-2, 2), randomInRangeFloat(-2, 2))
+    }
 
     animations.move()
-    if (window.clock % 3 === 0)
-        animations.tick()
+    animations.tick()
 
     animations.render()
 

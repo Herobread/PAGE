@@ -8,24 +8,22 @@ import { shapes } from '../lib/shapes.js'
 import { ui } from '../lib/ui.js'
 import { randomInRange, randomInRangeFloat } from '../lib/util.js'
 
-let selected = ''
-let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
 export async function test() {
-    renderer.drawObject(`Page main.js` + window.h + ' ' + window.w, 5, 5)
+    renderer.drawObject(`Page test.js h=${window.h} w=${window.w}, Frame render time = ${window.frt.toFixed(2)}(${(1000 / window.frt).toFixed(2)})`, 5, 5)
     const pointer = mouse.info()
 
-    for (let i = 0; i < 6; i += 1)
-        renderer.drawObject(characters.charAt(randomInRange(0, characters.length)), randomInRangeFloat(0, 4), randomInRangeFloat(0, 4))
-
     if (pointer.down) {
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 20; i += 1) {
             animations.animate(
-                randomInRange(0, 1) ? art.animations.fire : art.animations.particle, pointer.x, pointer.y,
-                randomInRangeFloat(-15, 15),
-                randomInRangeFloat(-13, 13),
+                art.animations.particle,
+                pointer.x,
+                pointer.y,
+                randomInRangeFloat(-2, 2),
+                randomInRangeFloat(-1, 1),
                 {
-                    // loop: true
+                    loop: true,
+                    tickSpeed: 5,
+                    moveSpeed: 1
                 }
             )
         }
@@ -35,8 +33,8 @@ export async function test() {
 
 
     animations.move()
-    if (window.clock % 3 === 0)
-        animations.tick()
+    animations.tick()
+
     animations.render()
 
     mouse.showCursor()
