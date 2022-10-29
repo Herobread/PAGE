@@ -9,6 +9,7 @@ import { test } from './pages/test.js'
 // const container = document.getElementById('container')
 const asciicontainer = document.getElementById('asciicontainer')
 
+window.showPerformance = true
 window.frt = 1
 window.asciiScreen = asciicontainer
 window.page = 'test'

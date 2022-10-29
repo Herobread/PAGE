@@ -9,14 +9,13 @@ import { ui } from '../lib/ui.js'
 import { randomInRange, randomInRangeFloat } from '../lib/util.js'
 
 export async function test() {
-    renderer.drawObject(`Page ${window.page} h=${window.h} w=${window.w}, Frame render time = ${window.frt.toFixed(2)}(${(1000 / window.frt).toFixed(2)}/${window.fps})`, 5, 5)
 
     const pointer = mouse.info()
 
     if (pointer.down) {
         for (let i = 0; i < 20; i += 1) {
             animations.animate(
-                art.animations.letters,
+                art.animations.particle,
                 pointer.x,
                 pointer.y,
                 randomInRangeFloat(-2, 2),
@@ -24,7 +23,7 @@ export async function test() {
                 {
                     loop: false,
                     tickSpeed: randomInRange(1, 10),
-                    moveSpeed: 0.2
+                    moveSpeed: 2
                 }
             )
         }
