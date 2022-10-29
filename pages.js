@@ -7,11 +7,11 @@ export const pages = [
         func: () => {
             mainMenu()
         },
-        fps: 60
+        fps: 144
     },
     {
         name: 'test',
         func: () => { test() },
-        fps: 60
+        fps: 144
     }
 ]

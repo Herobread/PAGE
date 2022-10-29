@@ -9,21 +9,22 @@ import { ui } from '../lib/ui.js'
 import { randomInRange, randomInRangeFloat } from '../lib/util.js'
 
 export async function test() {
-    renderer.drawObject(`Page test.js h=${window.h} w=${window.w}, Frame render time = ${window.frt.toFixed(2)}(${(1000 / window.frt).toFixed(2)})`, 5, 5)
+    renderer.drawObject(`Page ${window.page} h=${window.h} w=${window.w}, Frame render time = ${window.frt.toFixed(2)}(${(1000 / window.frt).toFixed(2)}/${window.fps})`, 5, 5)
+
     const pointer = mouse.info()
 
     if (pointer.down) {
         for (let i = 0; i < 20; i += 1) {
             animations.animate(
-                art.animations.particle,
+                art.animations.letters,
                 pointer.x,
                 pointer.y,
                 randomInRangeFloat(-2, 2),
                 randomInRangeFloat(-1, 1),
                 {
-                    loop: true,
-                    tickSpeed: 5,
-                    moveSpeed: 1
+                    loop: false,
+                    tickSpeed: randomInRange(1, 10),
+                    moveSpeed: 0.2
                 }
             )
         }
@@ -31,6 +32,15 @@ export async function test() {
         renderer.drawObject('Click to create a lot of particles!', pointer.x + 3, pointer.y)
     }
 
+    ui.button({
+        content: 'Go to main.js',
+        x: 5,
+        y: 10,
+        pointer: pointer,
+        onClick: () => {
+            window.page = 'main'
+        },
+    })
 
     animations.move()
     animations.tick()
