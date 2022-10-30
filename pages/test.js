@@ -28,7 +28,7 @@ export async function test() {
             )
         }
     } else {
-        renderer.drawObject('Click to create a lot of particles!', pointer.x + 3, pointer.y)
+        renderer.drawObject('Click to create a lot of 144 fps particles!', pointer.x + 3, pointer.y)
     }
 
     ui.button({

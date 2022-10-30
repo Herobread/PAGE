@@ -15,6 +15,25 @@ export async function mainMenu() {
 
     renderer.drawObject('Just another page', 5, 10)
 
+    if (pointer.down) {
+        for (let i = 0; i < 20; i += 1) {
+            animations.animate(
+                art.animations.particle,
+                pointer.x,
+                pointer.y,
+                randomInRangeFloat(-2, 2),
+                randomInRangeFloat(-1, 1),
+                {
+                    loop: false,
+                    tickSpeed: randomInRange(1, 10),
+                    moveSpeed: 2
+                }
+            )
+        }
+    } else {
+        renderer.drawObject('Click to create a lot of 60 fps particles!', pointer.x + 3, pointer.y)
+    }
+
     ui.button({
         content: 'Go to test.js',
         x: 5,
