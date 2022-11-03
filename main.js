@@ -9,24 +9,30 @@ import { test } from './pages/test.js'
 // const container = document.getElementById('container')
 const asciicontainer = document.getElementById('asciicontainer')
 
-window.showPerformance = true
-window.frt = 1
+window.w = 10
+window.h = 10
+window.showPerformance = false
+window.frt = 0
+window.logic = 0
 window.asciiScreen = asciicontainer
 window.page = 'test'
 window.currentPage = window.page
-const startPageId = 1
+const startPageId = 3
 window.currentPageFunction = pages[startPageId].func
+pages[startPageId].init()
 window.fps = pages[startPageId].fps
 window.clock = 0
 
-async function resizer() {
+let interval
+
+function resizer() {
     window.w = Math.floor(window.innerWidth / (window.fsize * 0.66))
     window.h = Math.floor(window.innerHeight / (window.fsize * 1.22)) + 1
 
     asciiMap.init()
 }
-
 window.onload = function () {
+    asciiMap.init()
     resizer()
     window.addEventListener('resize', resizer, false)
 
@@ -34,9 +40,10 @@ window.onload = function () {
 
     mouse.init()
     kb.init()
+
+    interval = setInterval(main, 1000 / 1000)
 }
 
-let interval = setInterval(main, 1000 / 1000)
 
 export function updateFps(fps) {
     clearInterval(interval)
@@ -54,13 +61,20 @@ function main() {
     renderer.render()
 
     if (window.currentPage == window.page) {
+        const s = performance.now()
+
         window.currentPageFunction()
+        logger.log('logic', performance.now() - s)
+
+        if (window.clock % 200 === 1) {
+        }
     } else {
         pages.forEach(page => {
             if (page.name === window.page) {
                 updateFps(page.fps)
                 window.currentPage = window.page
                 window.currentPageFunction = page.func
+                page.init()
             }
         })
     }
@@ -72,8 +86,9 @@ function main() {
     window.frameTime = end - start
 
     if (window.clock % 20 === 0) {
-        // frame render time
         const frt = logger.getLog('rendertime')
         window.frt = frt
+        const logic = logger.getLog('logic')
+        window.logic = logic
     }
 }
