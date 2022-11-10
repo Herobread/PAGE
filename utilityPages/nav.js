@@ -4,7 +4,7 @@ export const navigation = [
         onClick: () => { window.page = 'utility-asset-viewer' }
     },
     {
-        content: 'Animations',
+        content: 'Particles/animations',
         onClick: () => { window.page = 'utility-animation-viewer' }
     },
 ]

@@ -1,11 +1,8 @@
 import { art } from '../art.js'
 import { animations } from '../lib/animations.js'
-import { colisions } from '../lib/colisions.js'
-import { gamepad } from '../lib/gamepad.js'
 import { kb } from '../lib/keyboard.js'
 import { mouse } from '../lib/mouse.js'
 import { renderer } from '../lib/renderer.js'
-import { shapes } from '../lib/shapes.js'
 import { ui } from '../lib/ui.js'
 import { randomInRange, randomInRangeFloat } from '../lib/util.js'
 
@@ -40,6 +37,7 @@ export async function mainMenu() {
         y: 20,
         pointer: pointer,
         onClick: () => {
+            console.log('first')
             window.page = 'test'
         },
     })

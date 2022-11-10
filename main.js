@@ -15,9 +15,9 @@ window.showPerformance = false
 window.frt = 0
 window.logic = 0
 window.asciiScreen = asciicontainer
-window.page = 'test'
+window.page = 'main'
 window.currentPage = window.page
-const startPageId = 3
+const startPageId = 2
 window.currentPageFunction = pages[startPageId].func
 pages[startPageId].init()
 window.fps = pages[startPageId].fps
@@ -31,6 +31,7 @@ function resizer() {
 
     asciiMap.init()
 }
+
 window.onload = function () {
     asciiMap.init()
     resizer()
