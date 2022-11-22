@@ -1,5 +1,4 @@
-import { mainMenu } from "./pages/main.js"
-import { test } from "./pages/test.js"
+import { game, initGame } from "./pages/main.js"
 import { animationViewer, initAnimationViewer } from "./utilityPages/viewAnimations.js"
 import { assetsViewer, initAssetsViewer } from "./utilityPages/viewAssets.js"
 
@@ -8,23 +7,15 @@ const fps = 144
 export const pages = [
     {
         name: 'main',
-        func: () => {
-            mainMenu()
-        },
+        func: game,
         fps: fps,
-        init: () => { }
-    },
-    {
-        name: 'test',
-        func: () => { test() },
-        fps: fps,
-        init: () => { }
+        init: initGame
     },
 
     /// utility pages
     {
         name: 'utility-asset-viewer',
-        func: () => { assetsViewer() },
+        func: assetsViewer,
         fps: fps,
         init: () => { initAssetsViewer() }
     },

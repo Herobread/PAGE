@@ -157,6 +157,11 @@ _ _\\     /_ _
          |#| 
           `
     },
+    block: {
+      name: 'block',
+      img: `##
+##`
+    }
   },
   animations: {
     particle: {

@@ -3,27 +3,35 @@ import { logger } from './lib/logger.js'
 import { mouse } from './lib/mouse.js'
 import { asciiMap, renderer } from './lib/renderer.js'
 import { pages } from './pages.js'
-import { mainMenu } from './pages/main.js'
-import { test } from './pages/test.js'
 
-// const container = document.getElementById('container')
+// editable config //
+
+const startPageId = 1
+// window.showPerformance = true
+
+// end editable config //
+
+
+let interval
 const asciicontainer = document.getElementById('asciicontainer')
 
 window.w = 10
 window.h = 10
-window.showPerformance = false
-window.frt = 0
-window.logic = 0
+
 window.asciiScreen = asciicontainer
+
 window.page = 'main'
 window.currentPage = window.page
-const startPageId = 2
 window.currentPageFunction = pages[startPageId].func
-pages[startPageId].init()
 window.fps = pages[startPageId].fps
+
 window.clock = 0
 
-let interval
+window.frt = 0
+window.logic = 0
+window.objects = 0
+window.activeAnimations = 0
+
 
 function resizer() {
     window.w = Math.floor(window.innerWidth / (window.fsize * 0.66))
@@ -34,7 +42,9 @@ function resizer() {
 
 window.onload = function () {
     asciiMap.init()
+    pages[startPageId].init()
     resizer()
+
     window.addEventListener('resize', resizer, false)
 
     updateFps(window.fps)
@@ -68,6 +78,7 @@ function main() {
         logger.log('logic', performance.now() - s)
 
         if (window.clock % 200 === 1) {
+            console.log('logic: ', logger.getLog('logic'))
         }
     } else {
         pages.forEach(page => {

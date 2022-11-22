@@ -1,51 +1,43 @@
-import { art } from '../art.js'
 import { animations } from '../lib/animations.js'
 import { kb } from '../lib/keyboard.js'
 import { mouse } from '../lib/mouse.js'
-import { renderer } from '../lib/renderer.js'
-import { ui } from '../lib/ui.js'
-import { randomInRange, randomInRangeFloat } from '../lib/util.js'
+import { randomInRange } from '../lib/util.js'
+import { Block } from '../objects/block.js'
+import { colisions } from '../lib/colisions.js'
 
-export async function mainMenu() {
+let blocks = []
+
+export function initGame() {
+    for (let i = 0; i < 2; i += 1) {
+        blocks.push(new Block(randomInRange(0, window.w), randomInRange(0, window.h)))
+    }
+}
+
+export function game() {
     const pointer = mouse.info()
     const keyboard = kb.info()
 
-    renderer.drawObject('Just another page', 5, 10)
 
-    if (pointer.down) {
-        for (let i = 0; i < 20; i += 1) {
-            animations.animate(
-                art.animations.particle,
-                pointer.x,
-                pointer.y,
-                randomInRangeFloat(-2, 2),
-                randomInRangeFloat(-1, 1),
-                {
-                    loop: false,
-                    tickSpeed: randomInRange(1, 10),
-                    moveSpeed: 2
-                }
-            )
-        }
-    } else {
-        renderer.drawObject('Click to create a lot of 60 fps particles!', pointer.x + 3, pointer.y)
+    blocks.forEach(block => {
+        block.draw()
+        block.logic()
+    })
+
+    blocks[0].setPos(pointer.x - 1, pointer.y - 1)
+
+    if (pointer.click) {
+        blocks.push(new Block(pointer.x - 1, pointer.y - 1))
     }
 
-    ui.button({
-        content: 'Go to test.js',
-        x: 5,
-        y: 20,
-        pointer: pointer,
-        onClick: () => {
-            console.log('first')
-            window.page = 'test'
-        },
-    })
+
+    tick()
+    mouse.showCursor()
+}
+
+function tick() {
+    colisions.check()
 
     animations.move()
     animations.tick()
-
     animations.render()
-
-    mouse.showCursor()
 }
