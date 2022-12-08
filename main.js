@@ -4,38 +4,51 @@ import { mouse } from './lib/mouse.js'
 import { asciiMap, renderer } from './lib/renderer.js'
 import { pages } from './pages.js'
 
-// editable config //
+window.renderer = {}
 
-const startPageId = 1
-// window.showPerformance = true
+//// editable config
 
-// end editable config //
+const startPageId = 0 // selects corresponding page in page.js file
 
+// window.renderer.showPerformance = true // show perfomance overlay
+// window.showPerformanceLogs = true // log average render and logic time for 200 frames in console 
+
+window.renderer.blendMode = true // blend blendable symbols when drawing them (for example: '-' and '|' to '+')
+
+//// end editable config
+//// info variables
+
+window.frt = 0 // frame render time
+window.logic = 0 // logic processing time
+window.objects = 0 // WIP amount of active objects
+window.activeAnimations = 0 // amount of active animations
+window.clock = 0 // counts from 0 to 1000, adds 1 every frame
+window.fps = 0 // target fps
+
+// width and height of screen in symbols
+window.w = 0
+window.h = 0
+
+//// end info variables
+//// constants
+
+const symbolWidth = 0.66
+const symbolHeight = 1.22
+
+////
 
 let interval
-const asciicontainer = document.getElementById('asciicontainer')
 
-window.w = 10
-window.h = 10
-
-window.asciiScreen = asciicontainer
+window.asciiScreen = document.getElementById('asciicontainer')
 
 window.page = 'main'
 window.currentPage = window.page
 window.currentPageFunction = pages[startPageId].func
 window.fps = pages[startPageId].fps
 
-window.clock = 0
-
-window.frt = 0
-window.logic = 0
-window.objects = 0
-window.activeAnimations = 0
-
-
 function resizer() {
-    window.w = Math.floor(window.innerWidth / (window.fsize * 0.66))
-    window.h = Math.floor(window.innerHeight / (window.fsize * 1.22)) + 1
+    window.w = Math.floor(window.innerWidth / (window.fsize * symbolWidth))
+    window.h = Math.floor(window.innerHeight / (window.fsize * symbolHeight)) + 1
 
     asciiMap.init()
 }
@@ -59,48 +72,50 @@ window.onload = function () {
 export function updateFps(fps) {
     clearInterval(interval)
 
-    console.log('updated fps to', fps)
-
     window.fps = fps
     window.renderTime = 1000 / fps
     interval = setInterval(main, window.renderTime)
 }
 
 function main() {
-    const start = performance.now()
+    const renderTimeStart = performance.now()
 
     renderer.render()
 
-    if (window.currentPage == window.page) {
-        const s = performance.now()
+    if (window.currentPage === window.page) {
+        const logicTimeStart = performance.now()
 
         window.currentPageFunction()
-        logger.log('logic', performance.now() - s)
+        logger.log('logic', performance.now() - logicTimeStart)
 
-        if (window.clock % 200 === 1) {
+        if (window.showPerformanceLogs && window.clock % 200 === 1) {
             console.log('logic: ', logger.getLog('logic'))
         }
     } else {
         pages.forEach(page => {
             if (page.name === window.page) {
                 updateFps(page.fps)
+
                 window.currentPage = window.page
                 window.currentPageFunction = page.func
+
                 page.init()
             }
         })
     }
 
-    const end = performance.now()
+    const renderTimeEnd = performance.now()
+    const renderTime = renderTimeEnd - renderTimeStart
 
-    logger.log('rendertime', end - start)
+    logger.log('rendertime', renderTime)
 
-    window.frameTime = end - start
+    window.frameTime = renderTime
 
     if (window.clock % 20 === 0) {
         const frt = logger.getLog('rendertime')
-        window.frt = frt
         const logic = logger.getLog('logic')
+
+        window.frt = frt
         window.logic = logic
     }
 }
