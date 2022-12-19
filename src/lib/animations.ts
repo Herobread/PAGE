@@ -1,15 +1,18 @@
 import { renderer } from "lib/renderer"
 
-const debug = 0
+const debug = false
 
 interface animationAsset {
     sprites: string[]
 }
 
 interface options {
-    tickSpeed: number | undefined,
-    moveSpeed: number | undefined,
-    loop: boolean | undefined
+    /** Wait *tickSpeed* frames before updating animation position */
+    tickSpeed?: number | undefined,
+    /** Wait *moveSpeed* frames before updating x and y position */
+    moveSpeed?: number | undefined,
+    /** Start animation again after end */
+    loop?: boolean | undefined
 }
 
 interface activeAnimation {
@@ -28,7 +31,11 @@ let activeAnimations: activeAnimation[] = []
 
 export const animations = {
     amount: 0,
-    animate: async function (animation: animationAsset, x: number, y: number, xVel: number = 0, yVel: number = 0, options: options) {
+    animate: async function (animation: animationAsset, x: number, y: number, xVel: number = 0, yVel: number = 0, options: options = {
+        tickSpeed: 5,
+        moveSpeed: 1,
+        loop: false
+    }) {
         let { tickSpeed, moveSpeed, loop } = options || {}
 
         tickSpeed ??= 5
@@ -54,7 +61,7 @@ export const animations = {
      * this function will increase all animations stage by 1 
      * and removes animations that are far from screen
      */
-    tick: async function () {
+    tick: function () {
         window.activeAnimations = activeAnimations.length
         activeAnimations.map((animation, id) => {
             if (window.clock % animation.tickSpeed) {
@@ -84,7 +91,7 @@ export const animations = {
             return animation
         })
     },
-    move: async function () {
+    move: function () {
         activeAnimations.map(animation => {
 
             const { xVel, yVel, moveSpeed } = animation
@@ -95,7 +102,7 @@ export const animations = {
             return animation
         })
     },
-    render: async function () {
+    render: function () {
         this.amount = activeAnimations.length
         activeAnimations.forEach(animation => {
             renderer.drawObject(animation.sprites[animation.stage], animation.x, animation.y)

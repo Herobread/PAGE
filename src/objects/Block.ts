@@ -1,6 +1,8 @@
 import { renderer } from "lib/renderer"
+import { art } from "../art"
+import { animations } from "../lib/animations"
 import { colisions } from "../lib/colisions"
-import { randomInRangeFloat } from "../lib/util"
+import { randomInRange, randomInRangeFloat } from "../lib/util"
 
 export class Block {
     x: number
@@ -16,8 +18,8 @@ export class Block {
     constructor(x: number, y: number) {
         this.x = x
         this.y = y
-        this.xVel = randomInRangeFloat(-0.1, 0.1)
-        this.yVel = randomInRangeFloat(-0.1, 0.1)
+        this.xVel = randomInRangeFloat(0.2, 0.3) * (randomInRange(0, 1) === 0 ? 1 : -1)
+        this.yVel = randomInRangeFloat(0.2, 0.3) * (randomInRange(0, 1) === 0 ? 1 : -1)
         this.w = 3
         this.h = 3
         this.name = 'block'
@@ -47,5 +49,9 @@ export class Block {
 
     draw() {
         renderer.drawObject(this.sprite, this.x, this.y)
+
+        animations.animate(art.animations.particle, this.x, this.y, 0, 0, {
+            moveSpeed: 1
+        })
     }
 }
