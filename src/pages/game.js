@@ -9,7 +9,6 @@ import { randomInRange } from '../lib/util'
 let objects = []
 
 export function initGame() {
-    console.log(window.w)
     for (let i = 0; i < 20; i += 1)
         objects.push(new Block(randomInRange(1, window.w), randomInRange(1, window.h)))
 }
@@ -20,8 +19,8 @@ export async function game() {
     let pad = gamepad.info()
 
     objects.forEach(obj => {
-        obj.tick()
         obj.draw()
+        obj.tick()
     })
 
     tick()

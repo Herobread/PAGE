@@ -1,5 +1,5 @@
 {
-  "name": "jsae",
+  "name": "page",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -13,7 +13,7 @@
   "repository": {
     "url": "git+https://github.com/Herobread/PAGE.git"
   },
-  "author": "",
+  "author": "Oleksii Nazarenko",
   "license": "ISC",
   "devDependencies": {
     "css-loader": "^6.7.3",

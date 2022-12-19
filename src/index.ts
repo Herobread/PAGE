@@ -34,17 +34,22 @@ declare global {
 }
 
 
-//// editable config
-//(also, you can change them in console)
+/** editable config 
+ * also, you can change it in js console
+ * by typing "window.setting = value"
+*/
 
-const startPageId = 1 // start page, selects page with corresponding id in page.js file
+/* start page, selects page with corresponding id in page.js file */
+const startPageId = 1
 
-// window.showPerformanceLogs = true // log average render and logic time for 200 frames in console 
-window.showColisionBoxes = true // draws colision boxes
+/* log average render and logic time for 200 frames in console */
+// window.showPerformanceLogs = true
+/* draws colision boxes */
+// window.showColisionBoxes = true
 
 window.renderer = {
     showTransperencyOverlays: false, // helps to configure transperency maps, works only for renderer.drawTransparentObject(...)
-    showPerformance: true, // show perfomance overlay
+    showPerformance: false, // show perfomance overlay
 }
 window.showUndefinedTransperencyMapWarning = true // show error info near the object and log warn to the console if there is no 'tm' attribute in sprite, that was sent to renderer.drawTransparentObject(...)
 
@@ -59,8 +64,8 @@ window.clock = 0 // counts from 0 to 1000, adds 1 every frame
 window.fps = 0 // target fps
 
 // width and height of screen in symbols
-window.w = 10
-window.h = 10
+window.w = 0
+window.h = 0
 
 //// end info variables
 //// constants

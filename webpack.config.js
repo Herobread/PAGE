@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
     mode: 'development',
-    // devtool: 'eval-source-map',
+    devtool: 'eval-source-map',
     entry: './src/index.ts',
     module: {
         rules: [
@@ -20,7 +20,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'public'),
-        publicPath: "/PAGE/", /* github repository name */
+        // publicPath: "/PAGE/",
     },
     resolve: {
         extensions: ['.ts', '.js'],

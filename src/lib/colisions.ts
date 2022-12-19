@@ -36,7 +36,6 @@ export const colisions = {
         return checkHeight && checkWidth
     },
     checkRectanglesColision: function (rectangle1: baseColisionRectangle, rectangle2: baseColisionRectangle) {
-        console.log(rectangle1)
         return (
             rectangle1.x <= rectangle2.x + rectangle2.w &&
             rectangle1.x + rectangle1.w >= rectangle2.x &&

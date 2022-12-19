@@ -18,8 +18,8 @@ export class Block {
         this.y = y
         this.xVel = randomInRangeFloat(-0.1, 0.1)
         this.yVel = randomInRangeFloat(-0.1, 0.1)
-        this.w = 30
-        this.h = 30
+        this.w = 3
+        this.h = 3
         this.name = 'block'
 
         this.cd = 0
@@ -29,24 +29,23 @@ export class Block {
     tick() {
         this.sprite = '###\n###\n###'
 
-        this.x += this.xVel
-        this.y += this.yVel
-
         colisions.addRectangleColision(this, () => {
-            console.log('first')
-            this.cd = 300
             this.sprite = '...\n...\n...'
         })
 
-        this.cd -= 1
+        this.x += this.xVel
+        this.y += this.yVel
 
-        if (this.cd > 0) {
-            renderer.drawObject(this.sprite, this.x, this.y)
+        if (this.x < 0 || this.x + this.w > window.w) {
+            this.xVel *= -1
         }
-        renderer.drawObject(`${this.cd}`, this.x, this.y)
 
+        if (this.y < 0 || this.y + this.h > window.h) {
+            this.yVel *= -1
+        }
     }
 
     draw() {
+        renderer.drawObject(this.sprite, this.x, this.y)
     }
 }
