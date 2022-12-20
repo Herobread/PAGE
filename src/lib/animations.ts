@@ -2,6 +2,7 @@ import { renderer } from "lib/renderer"
 
 const debug = false
 
+
 interface animationAsset {
     sprites: string[]
 }
