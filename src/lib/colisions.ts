@@ -1,5 +1,6 @@
 import { shapes } from "./shapes"
 
+
 interface baseColisionRectangle {
     x: number,
     y: number,
